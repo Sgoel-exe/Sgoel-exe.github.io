@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shrey Goel — Gameplay &amp; Engine Programmer</title>
+<meta name="description" content="Portfolio of Shrey Goel, a gameplay and engine programmer specializing in C++, Unreal Engine, and systems architecture.">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-alt: #10131a;
+    --card: #151922;
+    --card-hover: #1a1f2b;
+    --border: #232938;
+    --text: #e8eaf0;
+    --text-dim: #98a1b3;
+    --text-faint: #656e82;
+    --accent: #5fd9c6;
+    --accent-dim: #2f6b62;
+    --amber: #f0ac5f;
+    --radius: 10px;
+    --maxw: 980px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    font-size: 16px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(11,13,18,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .brand { font-weight: 700; font-size: 16px; letter-spacing: 0.3px; color: var(--text); }
+  .navlinks { display: flex; gap: 24px; align-items: center; }
+  .navlinks a { color: var(--text-dim); font-size: 14px; font-weight: 500; }
+  .navlinks a:hover { color: var(--text); text-decoration: none; }
+  .nav-cta {
+    background: var(--accent); color: #06201c !important; padding: 7px 14px; border-radius: 6px;
+    font-weight: 600; font-size: 13px;
+  }
+  .nav-cta:hover { text-decoration: none; opacity: 0.9; }
+
+  /* Hero */
+  header.hero { padding: 88px 0 64px; border-bottom: 1px solid var(--border); }
+  .eyebrow {
+    color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 14px;
+  }
+  h1 { font-size: 42px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 14px; }
+  .hero-sub { color: var(--text-dim); font-size: 18px; max-width: 640px; margin-bottom: 28px; }
+  .hero-links { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 18px; border-radius: 7px; font-weight: 600; font-size: 14px;
+    border: 1px solid var(--border);
+  }
+  .btn-primary { background: var(--accent); color: #06201c; border-color: var(--accent); }
+  .btn-primary:hover { text-decoration: none; opacity: 0.9; }
+  .btn-ghost { color: var(--text); }
+  .btn-ghost:hover { text-decoration: none; background: var(--card); }
+  .hero-meta { display: flex; gap: 28px; flex-wrap: wrap; }
+  .hero-meta div { font-size: 13px; color: var(--text-faint); }
+  .hero-meta strong { color: var(--text); display: block; font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+
+  /* Section shared */
+  section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  .section-head { margin-bottom: 36px; }
+  .section-num { color: var(--text-faint); font-size: 13px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
+  h2 { font-size: 26px; font-weight: 700; }
+  .section-desc { color: var(--text-dim); margin-top: 8px; max-width: 620px; font-size: 15px; }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; }
+  .about-text p { color: var(--text-dim); margin-bottom: 14px; font-size: 15.5px; }
+  .about-text strong { color: var(--text); font-weight: 600; }
+  .fact-list { display: flex; flex-direction: column; gap: 18px; }
+  .fact { border-left: 2px solid var(--accent-dim); padding-left: 14px; }
+  .fact .k { font-size: 13px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+  .fact .v { font-size: 14.5px; color: var(--text); }
+
+  /* Projects */
+  .project {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 28px; margin-bottom: 22px;
+  }
+  .project-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+  .project-title { font-size: 19px; font-weight: 700; }
+  .project-meta { color: var(--text-faint); font-size: 13px; margin-bottom: 16px; }
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tag {
+    font-size: 11.5px; font-weight: 600; padding: 3px 9px; border-radius: 100px;
+    background: rgba(95,217,198,0.1); color: var(--accent); border: 1px solid rgba(95,217,198,0.25);
+  }
+  .project-body { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  .project-body.has-media { grid-template-columns: 1.15fr 0.85fr; }
+  .project ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .project li { color: var(--text-dim); font-size: 14.5px; padding-left: 16px; position: relative; }
+  .project li::before { content: "—"; position: absolute; left: 0; color: var(--text-faint); }
+  .media-frame {
+    position: relative; width: 100%; padding-top: 56.25%; border-radius: 8px; overflow: hidden;
+    background: #000; border: 1px solid var(--border);
+  }
+  .media-frame iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .project-links { display: flex; gap: 14px; margin-top: 16px; font-size: 13.5px; font-weight: 600; }
+  .project-links .todo { color: var(--text-faint); font-style: italic; font-weight: 400; }
+
+  .earlier-head { font-size: 13px; font-weight: 700; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.6px; margin: 32px 0 16px; }
+  .earlier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .earlier-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+  .earlier-card .et { font-size: 14.5px; font-weight: 700; margin-bottom: 5px; }
+  .earlier-card .ed { font-size: 12.5px; color: var(--text-dim); line-height: 1.45; }
+
+  /* Experience */
+  .exp-entry { margin-bottom: 30px; }
+  .exp-entry:last-child { margin-bottom: 0; }
+  .exp-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  .exp-role { font-size: 16.5px; font-weight: 700; }
+  .exp-dates { font-size: 13px; color: var(--text-faint); white-space: nowrap; }
+  .exp-sub { font-size: 14px; color: var(--text-dim); margin-bottom: 10px; }
+  .exp-entry ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .exp-entry li { color: var(--text-dim); font-size: 14.5px; padding-left: 16px; position: relative; }
+  .exp-entry li::before { content: "—"; position: absolute; left: 0; color: var(--text-faint); }
+  .exp-role-block { border-top: 1px solid var(--border); padding-top: 16px; margin-top: 16px; }
+  .exp-role-block:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+
+  /* Skills */
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .skill-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; }
+  .skill-card h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--accent); margin-bottom: 12px; }
+  .skill-card .items { display: flex; flex-wrap: wrap; gap: 7px; }
+  .skill-card .items span {
+    font-size: 13px; color: var(--text-dim); background: var(--bg-alt); border: 1px solid var(--border);
+    padding: 5px 10px; border-radius: 6px;
+  }
+
+  /* Footer / Contact */
+  footer { padding: 56px 0 40px; }
+  .contact-box {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 36px; text-align: center;
+  }
+  .contact-box h2 { margin-bottom: 10px; }
+  .contact-box p { color: var(--text-dim); margin-bottom: 22px; }
+  .contact-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .copyright { text-align: center; color: var(--text-faint); font-size: 12.5px; margin-top: 32px; }
+
+  @media (max-width: 760px) {
+    .navlinks a:not(.nav-cta) { display: none; }
+    h1 { font-size: 32px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .project-body.has-media { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .earlier-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Shrey Goel</div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="Shrey_Goel_Resume.pdf" class="nav-cta" target="_blank" rel="noopener">Resume</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Gameplay &amp; Engine Programmer</div>
+    <h1>Shrey Goel</h1>
+    <p class="hero-sub">
+      I build the systems underneath games — engines, AI, and architecture — with a focus on C++, Unreal Engine, and Unity.
+      Currently an M.S. Game Development student at DePaul University, shipping self-directed projects that go deep on
+      rendering, audio, and gameplay systems programming.
+    </p>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="#projects">View Projects</a>
+      <a class="btn btn-ghost" href="Shrey_Goel_Resume.pdf" target="_blank" rel="noopener">Download Resume</a>
+      <a class="btn btn-ghost" href="mailto:shrey.goel619@gmail.com">Get in Touch</a>
+    </div>
+    <div class="hero-meta">
+      <div><strong>Education</strong>DePaul University, M.S. Game Development (2027)</div>
+      <div><strong>Focus</strong>Engine architecture, AI systems, gameplay programming</div>
+      <div><strong>Based</strong>Chicago, IL · Remote-friendly</div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I like programming the parts of a game most players never think about — the vision system that decides
+          whether a guard sees you, the ring buffer that keeps audio from glitching, the render contract that stops
+          a GPU state leak before it happens. <strong>Software architecture and design patterns are the throughline
+          across everything I build</strong>: RAII, Strategy, Observer, Template Method, generational handles — not as
+          buzzwords, but as the actual tools I reach for to keep systems decoupled and extensible.
+        </p>
+        <p>
+          My recent work spans a from-scratch <strong>DirectX 11 rendering engine</strong>, a multithreaded
+          <strong>XAudio2 audio engine</strong>, a solo stealth game with a fully data-driven AI stack, and leading a
+          small team through Unreal Engine stealth mechanics at Wispy Moon Studios. I care as much about whether a
+          system is easy for someone else to extend as whether it works today.
+        </p>
+      </div>
+      <div class="fact-list">
+        <div class="fact">
+          <div class="k">Languages</div>
+          <div class="v">C++, C#, C, Python, Java, JavaScript, SQL, Bash</div>
+        </div>
+        <div class="fact">
+          <div class="k">Engines</div>
+          <div class="v">Unreal Engine (C++ &amp; Blueprints), Unity, DirectX 11</div>
+        </div>
+        <div class="fact">
+          <div class="k">Currently</div>
+          <div class="v">M.S. Game Development @ DePaul University, expected June 2027</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">Selected Work</div>
+      <h2>Projects</h2>
+      <p class="section-desc">Systems and engines built solo or in small teams — each one linked to a working demo or source where available.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-title">Henry's Big Heist</div>
+          <div class="project-meta">Unity / C# · Stealth game · April 2026 – Present</div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">C#</span><span class="tag">Unity</span><span class="tag">Finite State Machines</span>
+        <span class="tag">Strategy Pattern</span><span class="tag">Event-Driven Architecture</span><span class="tag">NavMesh AI</span>
+      </div>
+      <div class="project-body">
+        <ul>
+          <li>Architected a single reusable vision/detection system (3D field-of-view + raycast line-of-sight + wall occlusion) that powers every seeing hazard in the game — guards and security cameras alike — with zero duplicated detection code</li>
+          <li>Built a data-driven guard AI as a ScriptableObject finite state machine (4 states, 5 reusable transitions), so new behaviors ship as designer-editable assets with no code changes</li>
+          <li>Designed a precognition ability that predicts enemy paths by reusing existing NavMesh data at no extra simulation cost, with per-guard difficulty swappable via Strategy-pattern profiles</li>
+          <li>Standardized communication across AI, HUD, audio, hazard, and pickup subsystems through a central state machine and static C# events, removing direct cross-system references</li>
+          <li>Built a procedural audio layer that re-colors a single footstep clip with pitch/volume jitter and animation-synced cadence, cutting required audio assets while eliminating repetition</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-title">Real-Time 3D Rendering Engine</div>
+          <div class="project-meta">C++ / DirectX 11 · DePaul University · Spring 2026</div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">C++17</span><span class="tag">DirectX 11</span><span class="tag">HLSL</span>
+        <span class="tag">SIMD/SSE</span><span class="tag">RAII</span><span class="tag">Template Method</span>
+      </div>
+      <div class="project-body has-media">
+        <ul>
+          <li>Wrapped the full D3D11 device pipeline in 15 dedicated RAII state classes with deleted copy semantics, eliminating manual COM Release calls and reference-count leaks</li>
+          <li>Authored a 4,356-line SIMD-accelerated 3D math library (SSE intrinsics, 16-byte aligned) with proxy return types that defer costly operations like square roots — shipped as a versioned DLL reused across two engine projects</li>
+          <li>Designed a Template Method render contract (SetState → SetDataGPU → Draw → RestoreState) driving 6 shader variants across 7 graphics-object types with per-object constant buffers and Phong lighting</li>
+          <li>Built an 873-line custom parent-child-sibling scene graph with O(1) insert/remove and forward/reverse iterators</li>
+        </ul>
+        <div class="media-frame">
+          <iframe src="https://www.youtube.com/embed/UccPNDf-KH0" title="Real-Time 3D Rendering Engine demo" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="project-links">
+        <a href="https://youtu.be/UccPNDf-KH0" target="_blank" rel="noopener">Watch Demo →</a>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-title">Real-Time Audio Engine</div>
+          <div class="project-meta">C++ / XAudio2 · DePaul University · Spring 2026</div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">C++17</span><span class="tag">XAudio2</span><span class="tag">Multithreading</span>
+        <span class="tag">Lock-Free Queues</span><span class="tag">Generational Handles</span>
+      </div>
+      <div class="project-body has-media">
+        <ul>
+          <li>Architected an 8.2K-LOC, 3-thread share-nothing actor model (game, audio, file threads) that decouples the real-time mixer from disk I/O and gameplay logic, eliminating dropouts from blocking calls</li>
+          <li>Built a lock-managed, allocation-free 32-slot circular command buffer with power-of-two bitmask indexing for O(1) cross-thread transport of 15+ command types</li>
+          <li>Designed a 150-entry generational handle table with salted IDs and per-slot locking to detect stale cross-thread references in O(1), turning use-after-free bugs into safe, testable results</li>
+          <li>Built a pooled voice manager with 3 polymorphic callback strategies, including sample-accurate gapless buffer chaining, for an adaptive music system</li>
+        </ul>
+        <div class="media-frame">
+          <iframe src="https://www.youtube.com/embed/oxAyIZSsg_o" title="Real-Time Audio Engine demo" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="project-links">
+        <a href="https://youtu.be/oxAyIZSsg_o" target="_blank" rel="noopener">Watch Demo →</a>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-title">Space Invaders — C# Game Framework</div>
+          <div class="project-meta">C# · DePaul University · Winter 2026</div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">C#</span><span class="tag">Design Patterns</span><span class="tag">Object Pooling</span>
+        <span class="tag">Visitor / Observer</span><span class="tag">Composite</span>
+      </div>
+      <div class="project-body has-media">
+        <ul>
+          <li>Built an engine-agnostic game framework (~11.8K LOC, 162 files) around 15+ design patterns with UML-documented architecture</li>
+          <li>Designed a generic object-pooling framework reused across 8 subsystem managers, eliminating per-frame garbage-collection stalls</li>
+          <li>Built a 4-stage collision pipeline (Composite traversal, AABB broad-phase rejection, double-dispatch Visitor resolution, Observer fan-out) supporting 13 registered collision-pair types</li>
+          <li>Implemented a priority-queued, Command-pattern event scheduler with time-dilation pause for zero timer drift across scene transitions</li>
+        </ul>
+        <div class="media-frame">
+          <iframe src="https://www.youtube.com/embed/bturtOEEcy4" title="Space Invaders demo" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="project-links">
+        <a href="https://youtu.be/bturtOEEcy4" target="_blank" rel="noopener">Watch Demo →</a>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-title">RL Driving</div>
+          <div class="project-meta">Unreal Engine · Reinforcement Learning · 2025</div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Unreal Engine</span><span class="tag">Reinforcement Learning</span><span class="tag">AI</span>
+      </div>
+      <div class="project-body">
+        <ul>
+          <li>Implemented autonomous vehicle navigation using reinforcement learning in Unreal Engine</li>
+        </ul>
+      </div>
+      <div class="project-links">
+        <a href="#" target="_blank" rel="noopener">View on GitHub →</a> <span class="todo">(add your repo link)</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-title">Undisclosed Game</div>
+          <div class="project-meta">Wispy Moon Studios · Unreal Engine 4 · Android, iOS · 2024</div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Unreal Engine 4</span><span class="tag">C++</span><span class="tag">Blueprints</span><span class="tag">Mobile</span>
+      </div>
+      <div class="project-body">
+        <ul>
+          <li>Led development of core stealth gameplay mechanics and system design in Unreal Engine</li>
+          <li>Built automated functional tests for core mechanics to catch regressions early in development</li>
+        </ul>
+      </div>
+      <div class="project-links">
+        <span class="todo">(add your demo video link)</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-title">A Homeward Glorby</div>
+          <div class="project-meta">Unity · Space survival · 2024</div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Gameplay Systems</span>
+      </div>
+      <div class="project-body">
+        <ul>
+          <li>Built enemy and power-up spawning systems for a space-survival game with teleporter objectives</li>
+          <li>Optimized procedural asteroid generation</li>
+          <li>Collected and applied playtesting feedback to iterate on mechanics</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-title">Killer Cook</div>
+          <div class="project-meta">Unity · Restaurant management sim · 2024</div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">File I/O</span><span class="tag">Priority Queues</span>
+      </div>
+      <div class="project-body">
+        <ul>
+          <li>Built NPC customization via file I/O</li>
+          <li>Implemented priority-queue-based order management with audio cues</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-title">Sprouting Hope</div>
+          <div class="project-meta">P1 Games · Unity · Farming simulator · 2024</div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">UX Systems</span>
+      </div>
+      <div class="project-body">
+        <ul>
+          <li>Refactored legacy systems toward separation of concerns via modularization, reducing coupling and technical debt</li>
+          <li>Built an event-based tutorial system with adaptive toast pop-ups handling positioning, sizing, and text overflow</li>
+          <li>Implemented a dynamic upgrade lock/unlock system to drive game progression</li>
+        </ul>
+      </div>
+      <div class="project-links">
+        <a href="#" target="_blank" rel="noopener">Play on itch.io →</a> <span class="todo">(add your link)</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-title">Mihon Manga Reader</div>
+          <div class="project-meta">Android / Kotlin · Open Source · June 2026 – Present</div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">SQLDelight</span>
+      </div>
+      <div class="project-body">
+        <ul>
+          <li>Built privacy- and AI-focused features for the Mihon Android manga reader using Kotlin, Jetpack Compose, and a clean multi-module architecture</li>
+          <li>Developed a privacy-first, on-device tracking system with SQLDelight migrations, layered domain/data architecture, and backup/restore support</li>
+          <li>Redesigned library update scheduling to improve chapter-release detection, and prototyped AI-powered recommendations from reading history</li>
+        </ul>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/Sgoel-exe/mihon_custom" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+    </div>
+
+    <div class="earlier-head">Earlier Projects</div>
+    <div class="earlier-grid">
+      <div class="earlier-card">
+        <div class="et">ContraDiction</div>
+        <div class="ed">Redesigned classic Contra run-and-gun mechanics in Unity. · 2023</div>
+      </div>
+      <div class="earlier-card">
+        <div class="et">Classic Asteroids</div>
+        <div class="ed">Recreated the Atari arcade classic with advanced randomization and physics. · 2023</div>
+      </div>
+      <div class="earlier-card">
+        <div class="et">Standard Pong</div>
+        <div class="ed">Recreated Pong with custom collision physics. · 2023</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">Track Record</div>
+      <h2>Experience</h2>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-top">
+        <div class="exp-role">Lead Developer — The AAT Project</div>
+        <div class="exp-dates">March 2026 – Present</div>
+      </div>
+      <div class="exp-sub">Remote · Henry's Big Heist (stealth game) · ~6,600 LOC across 13 subsystems</div>
+      <ul>
+        <li>Architecting the full AI, detection, ability, and audio systems for a solo-led stealth game, from vision/detection to a static-event-driven cross-system architecture</li>
+      </ul>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-top">
+        <div class="exp-role">Wispy Moon Studios</div>
+        <div class="exp-dates">Remote</div>
+      </div>
+      <div class="exp-role-block">
+        <div class="exp-top">
+          <div class="exp-role" style="font-size:14.5px;font-style:italic;font-weight:600;">Lead Developer</div>
+          <div class="exp-dates">March 2025 – August 2025</div>
+        </div>
+        <ul>
+          <li>Led a team of 3 programmers and partnered with 5+ designers through weekly planning meetings — scoping features, delegating tasks, and tracking milestones against client specifications</li>
+          <li>Designed reinforcement-learning-driven agentic AI combined with behavior trees and Environment Query Systems (EQS) for realistic animal behavior</li>
+        </ul>
+      </div>
+      <div class="exp-role-block">
+        <div class="exp-top">
+          <div class="exp-role" style="font-size:14.5px;font-style:italic;font-weight:600;">Unreal Engine Programmer</div>
+          <div class="exp-dates">September 2024 – March 2025</div>
+        </div>
+        <ul>
+          <li>Led development of core stealth gameplay mechanics and system design in Unreal Engine, partnering with design to scope features</li>
+          <li>Built automated functional tests for core mechanics to catch regressions early in development</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-top">
+        <div class="exp-role">Game Developer — P1 Games</div>
+        <div class="exp-dates">August 2024 – September 2024</div>
+      </div>
+      <div class="exp-sub">Remote</div>
+      <ul>
+        <li>Built and optimized open-source Unity games within a 200+ person cross-functional community of artists, sound designers, and developers</li>
+        <li>Iterated on game mechanics based on weekly playtest feedback</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-num">Toolbox</div>
+      <h2>Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Languages</h3>
+        <div class="items">
+          <span>C++</span><span>C#</span><span>C</span><span>Python</span><span>Kotlin</span>
+          <span>Java</span><span>JavaScript</span><span>SQL</span><span>Bash</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Engines &amp; Graphics</h3>
+        <div class="items">
+          <span>Unreal Engine (C++ &amp; Blueprints)</span><span>Unity</span><span>DirectX 11</span>
+          <span>HLSL</span><span>SIMD/SSE</span><span>Multithreading</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Software Architecture</h3>
+        <div class="items">
+          <span>RAII</span><span>Observer</span><span>Strategy</span><span>State</span>
+          <span>Visitor</span><span>Command</span><span>Template Method</span><span>Object Pooling</span>
+          <span>Event-Driven Design</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Tools</h3>
+        <div class="items">
+          <span>Git</span><span>Perforce</span><span>PlasticSCM</span><span>.NET</span>
+          <span>Jetpack Compose</span><span>SQLDelight</span><span>Unix/Linux</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <h2>Let's talk</h2>
+      <p>Open to gameplay and engine programming roles — happy to walk through any of the projects above in more depth.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:shrey.goel619@gmail.com">Email Me</a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/goel-shrey" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/Sgoel-exe/Sgoel-exe" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="Shrey_Goel_Resume.pdf" target="_blank" rel="noopener">Resume</a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 Shrey Goel. Built with plain HTML/CSS — no framework, no tracking.</div>
+  </div>
+</footer>
+
+</body>
+</html>
